@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import Item from "../Item";
 
 const ITEMS_ENDPOINT = "http://localhost:3000/api/items";
 
-function Sidebar() {
+function Sidebar({ onItemSelected }) {
   const [items, setItems] = useState([]);
   const fetchItems = () =>
     fetch(ITEMS_ENDPOINT)
@@ -10,13 +11,7 @@ function Sidebar() {
       .then(data => data.items);
 
   useEffect(() => {
-    console.log("inside use effect");
-    fetchItems()
-      .then(items => {
-        console.log("items are: ", items);
-        return items;
-      })
-      .then(setItems);
+    fetchItems().then(setItems);
   }, []);
 
   return (
@@ -27,17 +22,11 @@ function Sidebar() {
       <ul className="item-picker">
         {items &&
           items.map(item => (
-            <li key={item.id} className="item">
-              <h2>{item.name}</h2>
-              <p>
-                {item.dietaries &&
-                  item.dietaries.map((dietary, idx) => (
-                    <span key={idx} className="dietary">
-                      {dietary}
-                    </span>
-                  ))}
-              </p>
-            </li>
+            <Item
+              onClick={() => onItemSelected(item)}
+              key={item.id}
+              {...item}
+            ></Item>
           ))}
       </ul>
     </div>
