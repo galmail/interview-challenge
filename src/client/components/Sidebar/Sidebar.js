@@ -5,6 +5,8 @@ const ITEMS_ENDPOINT = "http://localhost:3000/api/items";
 
 function Sidebar({ onItemSelected }) {
   const [items, setItems] = useState([]);
+  const [filterByName, setFilterByName] = useState("");
+
   const fetchItems = () =>
     fetch(ITEMS_ENDPOINT)
       .then(response => response.json())
@@ -17,17 +19,28 @@ function Sidebar({ onItemSelected }) {
   return (
     <div className="col-4">
       <div className="filters">
-        <input className="form-control" placeholder="Name" />
+        <input
+          className="form-control"
+          placeholder="Name"
+          value={filterByName}
+          onChange={e => setFilterByName(e.currentTarget.value)}
+        />
       </div>
       <ul className="item-picker">
         {items &&
-          items.map(item => (
-            <Item
-              onClick={() => onItemSelected(item)}
-              key={item.id}
-              {...item}
-            ></Item>
-          ))}
+          items
+            .filter(
+              item =>
+                !filterByName ||
+                item.name.toLowerCase().includes(filterByName.toLowerCase())
+            )
+            .map(item => (
+              <Item
+                onClick={() => onItemSelected(item)}
+                key={item.id}
+                {...item}
+              ></Item>
+            ))}
       </ul>
     </div>
   );
