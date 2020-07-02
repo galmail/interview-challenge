@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./App.css";
-import Sidebar from "./components/Sidebar";
-import Menu from "./components/Menu";
-import Header from "./components/Header";
+import Sidebar from "../Sidebar";
+import Menu from "../Menu";
+import Header from "../Header";
 
 function App() {
   const [itemsSelected, setItemsSelected] = useState([]);
