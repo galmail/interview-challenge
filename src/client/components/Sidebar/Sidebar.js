@@ -3,17 +3,25 @@ import Item from "../Item";
 
 const ITEMS_ENDPOINT = "http://localhost:3000/api/items";
 
-function Sidebar({ onItemSelected }) {
+const fn = () => {};
+
+function Sidebar({ onItemSelected = fn, onItemsFetched = fn }) {
   const [items, setItems] = useState([]);
   const [filterByName, setFilterByName] = useState("");
 
   const fetchItems = () =>
     fetch(ITEMS_ENDPOINT)
       .then(response => response.json())
-      .then(data => data.items);
+      .then(data => data.items)
+      .catch(e => {
+        console.error("Error fetching items!", e);
+        return [];
+      });
 
   useEffect(() => {
-    fetchItems().then(setItems);
+    fetchItems()
+      .then(setItems)
+      .finally(onItemsFetched);
   }, []);
 
   return (
@@ -23,24 +31,23 @@ function Sidebar({ onItemSelected }) {
           className="form-control"
           placeholder="Name"
           value={filterByName}
-          onChange={e => setFilterByName(e.currentTarget.value)}
+          onChange={e => setFilterByName(e.target.value)}
         />
       </div>
       <ul className="item-picker">
-        {items &&
-          items
-            .filter(
-              item =>
-                !filterByName ||
-                item.name.toLowerCase().includes(filterByName.toLowerCase())
-            )
-            .map(item => (
-              <Item
-                onClick={() => onItemSelected(item)}
-                key={item.id}
-                {...item}
-              ></Item>
-            ))}
+        {items
+          .filter(
+            item =>
+              !filterByName ||
+              item.name.toLowerCase().includes(filterByName.toLowerCase())
+          )
+          .map(item => (
+            <Item
+              onClick={() => onItemSelected(item)}
+              key={item.id}
+              {...item}
+            ></Item>
+          ))}
       </ul>
     </div>
   );

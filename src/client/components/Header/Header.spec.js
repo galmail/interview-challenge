@@ -5,23 +5,23 @@ import Header from "./Header";
 
 describe("Header", () => {
   let wrapper;
+  let itemsSelected;
 
-  const itemsSelected = [
-    {
-      id: 1001,
-      name: "Kale Caesar Pasta, Turmeric Satay Broccoli & Lemon Cashew Greens",
-      dietaries: ["v", "ve", "df", "gf", "n!"]
-    },
-    {
-      id: 1002,
-      name: "Hake & Smoky Chickpeas, Brown Rice & Quinoa, Roasted Roots",
-      dietaries: ["gf", "df", "rsf"]
-    }
-  ];
-
-  // beforeEach(() => {
-
-  // });
+  beforeEach(() => {
+    itemsSelected = [
+      {
+        id: 1001,
+        name:
+          "Kale Caesar Pasta, Turmeric Satay Broccoli & Lemon Cashew Greens",
+        dietaries: ["v", "ve", "df", "gf", "n!"]
+      },
+      {
+        id: 1002,
+        name: "Hake & Smoky Chickpeas, Brown Rice & Quinoa, Roasted Roots",
+        dietaries: ["gf", "df", "rsf"]
+      }
+    ];
+  });
 
   it("renders total items selected", () => {
     wrapper = shallow(<Header itemsSelected={itemsSelected} />);
@@ -45,5 +45,11 @@ describe("Header", () => {
     wrapper = mount(<Header itemsSelected={itemsSelected} />);
     const veDietary = wrapper.find('Dietary[dietary="ve"]');
     expect(veDietary.text()).toContain("1x ve");
+  });
+
+  it("renders no Dietary when no item is selected", () => {
+    itemsSelected = [];
+    wrapper = mount(<Header itemsSelected={itemsSelected} />);
+    expect(wrapper.find("Dietary").length).toEqual(0);
   });
 });

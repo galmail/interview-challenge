@@ -4,7 +4,7 @@
   "private": true,
   "main": "src/server/index.js",
   "scripts": {
-    "test": "jest src/client",
+    "test": "jest --watch src/client",
     "build": "webpack --mode production",
     "start": "npm run build && node src/server/index.js",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
@@ -24,6 +24,7 @@
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@testing-library/dom": "^7.20.0",
     "babel-eslint": "^10.0.0",
     "babel-loader": "^8.0.0",
     "clean-webpack-plugin": "^1.0.0",

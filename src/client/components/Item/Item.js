@@ -1,20 +1,8 @@
 import React from "react";
 
 function Item({ id, name, dietaries, onClick, onRemove }) {
-  const handleClick = e => {
-    e.preventDefault();
-    console.log(`Item ${id} was clicked.`);
-    if (onClick) onClick();
-  };
-
-  const handleRemove = e => {
-    e.preventDefault();
-    console.log(`Item ${id} was removed.`);
-    onRemove();
-  };
-
   return (
-    <li onClick={handleClick} key={id} className="item">
+    <li onClick={onClick} key={id} className="item">
       <h2>{name}</h2>
       <p>
         {dietaries &&
@@ -25,7 +13,7 @@ function Item({ id, name, dietaries, onClick, onRemove }) {
           ))}
       </p>
       {onRemove && (
-        <button onClick={handleRemove} className="remove-item">
+        <button onClick={onRemove} className="remove-item">
           x
         </button>
       )}
