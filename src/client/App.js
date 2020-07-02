@@ -23,7 +23,7 @@ function App() {
       <div className="container menu-builder">
         <div className="row">
           <Sidebar onItemSelected={toggleItem}></Sidebar>
-          <Menu items={itemsSelected}></Menu>
+          <Menu items={itemsSelected} onItemRemoved={toggleItem}></Menu>
         </div>
       </div>
     </div>

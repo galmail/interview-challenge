@@ -1,11 +1,18 @@
 import React from "react";
 
-function Item({ id, name, dietaries, onClick }) {
+function Item({ id, name, dietaries, onClick, onRemove }) {
   const handleClick = e => {
     e.preventDefault();
     console.log(`Item ${id} was clicked.`);
     if (onClick) onClick();
   };
+
+  const handleRemove = e => {
+    e.preventDefault();
+    console.log(`Item ${id} was removed.`);
+    onRemove();
+  };
+
   return (
     <li onClick={handleClick} key={id} className="item">
       <h2>{name}</h2>
@@ -17,6 +24,11 @@ function Item({ id, name, dietaries, onClick }) {
             </span>
           ))}
       </p>
+      {onRemove && (
+        <button onClick={handleRemove} className="remove-item">
+          x
+        </button>
+      )}
     </li>
   );
 }
