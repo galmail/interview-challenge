@@ -19,7 +19,7 @@ function App() {
 
   return (
     <div className="wrapper">
-      <Header></Header>
+      <Header itemsSelected={itemsSelected}></Header>
       <div className="container menu-builder">
         <div className="row">
           <Sidebar onItemSelected={toggleItem}></Sidebar>
