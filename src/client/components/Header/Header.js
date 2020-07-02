@@ -1,6 +1,28 @@
 import React from "react";
 
 function Header({ itemsSelected }) {
+  const getAllDietaries = () => {
+    const allDietaries = itemsSelected.reduce(
+      (acc, item) => acc.concat(item.dietaries),
+      []
+    );
+    return [...new Set(allDietaries)];
+  };
+
+  const totalByDietary = dietary =>
+    itemsSelected.filter(item => item.dietaries.includes(dietary)).length;
+
+  function Dietary({ dietary }) {
+    return (
+      <>
+        {totalByDietary(dietary)}x{" "}
+        <span key={dietary} className="dietary">
+          {dietary}
+        </span>
+      </>
+    );
+  }
+
   return (
     <div className="menu-summary">
       <div className="container">
@@ -9,9 +31,9 @@ function Header({ itemsSelected }) {
             <span>{itemsSelected.length} items</span>
           </div>
           <div className="col-6 menu-summary-right">
-            6x <span className="dietary">ve</span>
-            4x <span className="dietary">v</span>
-            12x <span className="dietary">n!</span>
+            {getAllDietaries().map(dietary => (
+              <Dietary key={dietary} dietary={dietary} />
+            ))}
           </div>
         </div>
       </div>
